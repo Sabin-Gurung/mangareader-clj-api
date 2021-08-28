@@ -14,7 +14,11 @@
 * [GET] /manga-api/manga/{mangaid}/chapters
 * [GET] /manga-api/manga/{mangaid}/chapters/{chapter}
 * [GET] /manga-api/search/term?page=
-* [GET] /manga-api/autocomplete/term
+* [GET] /manga-api/autocomplete/term [special]
+
+### Exception handling
+[ ] for service
+[ ] for our endpiont
 
 ## Dev Ops
 [ ] Github pipeline to run tests  

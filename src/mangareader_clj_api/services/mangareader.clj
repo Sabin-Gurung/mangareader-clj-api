@@ -9,8 +9,9 @@
 (def BASE-URL "https://mangareader.tv")
 
 (defn -GET [endpoint]
-  (-> @(http/get endpoint {:client @default-client})
-      :body))
+  (let [res @(http/get endpoint {:client @default-client})]
+    (when (= 200 (:status res))
+      (:body res))))
 
 (defn -en-GET [endpoint]
   (-> (-GET endpoint)
@@ -78,22 +79,24 @@
   "Fetches the manga information and chapter list for a manga"
   (let [api (str BASE-URL "/manga/" id)
         html (-en-GET api)]
-    (-> {}
-        (assoc :title (-parse-manga-title html))
-        (assoc :genres (-parse-manga-genres html))
-        (assoc :chapters (-parse-manga-chapters html))
-        (assoc :source api))))
+    (when html
+      (-> {}
+          (assoc :title (-parse-manga-title html))
+          (assoc :genres (-parse-manga-genres html))
+          (assoc :chapters (-parse-manga-chapters html))
+          (assoc :source api)))))
 
 (defn chapter [manga-id chapter-id]
   "Fetches chapter information and contents for a manga chapter"
   (let [api (str BASE-URL "/chapter/" manga-id "/" chapter-id)
         html (-en-GET api)]
-    (-> {}
-        (assoc :manga-id manga-id)
-        (assoc :chapter-id chapter-id)
-        (assoc :title (-parse-chapter-title html))
-        (assoc :contents (-parse-chapter-contents html))
-        (assoc :source api))))
+    (when html
+      (-> {}
+          (assoc :manga-id manga-id)
+          (assoc :chapter-id chapter-id)
+          (assoc :title (-parse-chapter-title html))
+          (assoc :contents (-parse-chapter-contents html))
+          (assoc :source api)))))
 
 (defn search [term page]
   "Queries a term and returns matchin result"
@@ -160,7 +163,7 @@
 
 
   (->
-    (-en-GET "https://mangareader.tv/chapter/manga-aa951409/chapter-1")
+    (-en-GET "https://mangareader.tv/chapter/msdfasdfanga-aa951409/chapter-1")
     ;(-parse-chapter-title)
     ;(-parse-chapter-contents)
     )
@@ -172,13 +175,11 @@
       ;first
       )
   ;(chapter "manga-aa951409" "chapter-1")
-  (search "one piece" nil)
   (search "bleach" nil)
+  (manga "manga sdaf-rb968358")
   (manga "manga-rb968358")
-  (manga "manga-rb968358")
-  (chapter "manga-rb968358" "chapter-1")
+  (chapter "manga-rb968358" "asdfchapter-1")
   ;(search "odsfvafjalsfdsl;fkjlne" nil)
   ;(search "odsfvafjalsfdsl;fkjlne" 1)
   ;(search "odsfvafjalsfdsl;fkjlne" 2)
-
   )
