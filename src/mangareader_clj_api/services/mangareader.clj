@@ -1,9 +1,10 @@
 (ns mangareader-clj-api.services.mangareader
-  (:require [org.httpkit.client :as http]
-            [org.httpkit.sni-client :refer [default-client]]
-            [net.cgrand.enlive-html :as en]
-            [clojure.string :as str]
-            ))
+  (:require
+    [clojure.string :as str]
+    [net.cgrand.enlive-html :as en]
+    [org.httpkit.client :as http]
+    [org.httpkit.sni-client :refer [default-client]]
+    ))
 
 (def BASE-URL "https://mangareader.tv")
 
@@ -33,7 +34,7 @@
 (defn -parse-chapter-title [html]
   (->> (en/select html [:h1.d55])
        (mapcat :content)
-       (map str/trim)
+       (map #(-> (str/split % #"\n") last str/trim))
        first))
 
 (defn -parse-search-mangas [html]

@@ -1,7 +1,8 @@
 (ns mangareader-clj-api.api.use-cases.fetch-manga
-  (:require [schema.core :as s]
-            [mangareader-clj-api.services.mangareader :as m]
-            ))
+  (:require
+    [mangareader-clj-api.services.mangareader :as m]
+    [schema.core :as s]
+    ))
 
 (s/defschema MangaDto
   {:id       s/Str
