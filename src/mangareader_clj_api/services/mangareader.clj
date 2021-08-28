@@ -10,7 +10,10 @@
 
 (defn -GET [endpoint]
   (-> @(http/get endpoint {:client @default-client})
-      :body
+      :body))
+
+(defn -en-GET [endpoint]
+  (-> (-GET endpoint)
       en/html-snippet))
 
 (defn -parse-manga-genres [html]
@@ -62,15 +65,10 @@
                    (assoc :title (parse-title %))
                    (assoc :thumbnail (parse-thumbnail %)))))))
 
-(defn -parse-search-total-pages [html]
-  (-> (en/select html [:div.d70 :a])
-      (->> (mapcat :content) last)
-      (str/split #"\(")
-      last
-      (str/split #"\)")
-      first
-      (str/trim)
-      Integer/parseInt))
+(defn -parse-search-total-pages [raw-html]
+  (->> (re-find #"Last \((.*)\)" raw-html)
+       last
+       Integer/parseInt))
 
 (defn -parse-chapter-contents [html]
   (->> (en/select html [:div#ib :img])
@@ -79,7 +77,7 @@
 (defn manga [id]
   "Fetches the manga information and chapter list for a manga"
   (let [api (str BASE-URL "/manga/" id)
-        html (-GET api)]
+        html (-en-GET api)]
     (-> {}
         (assoc :title (-parse-manga-title html))
         (assoc :genres (-parse-manga-genres html))
@@ -89,7 +87,7 @@
 (defn chapter [manga-id chapter-id]
   "Fetches chapter information and contents for a manga chapter"
   (let [api (str BASE-URL "/chapter/" manga-id "/" chapter-id)
-        html (-GET api)]
+        html (-en-GET api)]
     (-> {}
         (assoc :manga-id manga-id)
         (assoc :chapter-id chapter-id)
@@ -102,17 +100,19 @@
   (let [query-term (-> term str/trim (str/replace #" " "+"))
         query-page (or page 1)
         api (str BASE-URL "/search/?w=" query-term "&page=" query-page)
-        html (-GET api)]
+        raw-html (-GET api)
+        html (en/html-snippet raw-html)]
     (-> {}
         (assoc :mangas (-parse-search-mangas html))
         (assoc :source api)
         (assoc :offset query-page)
-        (assoc :total-pages (-parse-search-total-pages html)))))
+        (assoc :total-pages (-parse-search-total-pages raw-html))
+        )))
 
 (comment
   (string? ["asdf"])
   (->
-    (-GET "https://mangareader.tv/search/?w=one+piece&page=2")
+    (-en-GET "https://mangareader.tv/search/?w=one+piece&page=2")
     ;(-parse-search-mangas)
     ;(-parse-search-total-pages)
     (en/select [:div.d70 :a])
@@ -147,7 +147,7 @@
   (Integer/parseInt "1")
 
   (->
-    (-GET "https://mangareader.tv/manga/manga-rb968358")
+    (-en-GET "https://mangareader.tv/manga/manga-rb968358")
     (en/select [:table.d48 :a])
     ;(-parse-manga-title)
     ;(-parse-manga-genres)
@@ -160,12 +160,12 @@
 
 
   (->
-    (-GET "https://mangareader.tv/chapter/manga-aa951409/chapter-1")
+    (-en-GET "https://mangareader.tv/chapter/manga-aa951409/chapter-1")
     ;(-parse-chapter-title)
     ;(-parse-chapter-contents)
     )
 
-  (-> (-GET "https://mangareader.tv/search/?w=one+piece&page=1")
+  (-> (-en-GET "https://mangareader.tv/search/?w=one+piece&page=1")
       ;(en/select [:div.d70 :a])
       ;last
       ;:content
@@ -173,6 +173,7 @@
       )
   ;(chapter "manga-aa951409" "chapter-1")
   (search "one piece" nil)
+  (search "bleach" nil)
   (manga "manga-rb968358")
   (manga "manga-rb968358")
   (chapter "manga-rb968358" "chapter-1")
