@@ -6,7 +6,11 @@
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [http-kit "2.5.3"]
                  [enlive "1.1.6"]
+                 [metosin/reitit "0.5.15"]
+                 [metosin/jsonista "0.3.3"]
+                 [prismatic/schema "1.1.12"]
                  ]
+  :resource-paths ["resources"]
   :main ^:skip-aot mangareader-clj-api.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
