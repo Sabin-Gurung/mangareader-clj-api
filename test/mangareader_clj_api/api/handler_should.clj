@@ -13,7 +13,7 @@
   (cond-> body (not (map? body)) (j/read-value j/keyword-keys-object-mapper)))
 
 
-(deftest testing-health-endpoint
+(deftest health-endpoint
   (testing "GET /health endpoint"
     (let [req (ring-mock/request :get "/manga-api/health")
           {:keys [status headers body error] :as response} (app req)
@@ -21,17 +21,7 @@
       (is (= 200 status))
       (is (= {:status "ok"} res)))))
 
-(deftest testing-manga-endpoint
-  (testing "GET /manga/{} endpoint"
-    (with-mock [m/manga data/a-manga]
-               (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358")
-                     {:keys [status headers body error] :as response} (app req)
-                     res (parse-response body)]
-                 (is (= 200 status))
-                 (is (= data/a-manga-response res))
-                 (is (= [[data/a-manga-id]] (calls m/manga)))))))
-
-(deftest testing-manga-chapters-endpoint
+(deftest manga-chapters-end
   (testing "GET /manga/:id/chapters endpoint"
     (with-mock [m/manga data/a-manga]
                (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358/chapters")
@@ -41,7 +31,7 @@
                  (is (= data/a-manga-chapters-res res))
                  (is (= [[data/a-manga-id]] (calls m/manga)))))))
 
-(deftest testing-manga-chapters-endpoint
+(deftest manga-chapters-endpoint
   (testing "GET /manga/:id/chapters/:chapter-id endpoint"
     (with-mock [m/chapter data/a-manga-chapter-1]
                (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358/chapters/chapter-1")
@@ -61,3 +51,13 @@
                  (is (= data/a-search-res res))
                  (is (= [["bleach" nil]] (calls m/search)))))))
 
+
+(deftest manga-endpoint
+  (testing "GET /manga/{} endpoint"
+    (with-mock [m/manga data/a-manga]
+               (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358")
+                     {:keys [status headers body error] :as response} (app req)
+                     res (parse-response body)]
+                 (is (= 200 status))
+                 (is (= data/a-manga-response res))
+                 (is (= [[data/a-manga-id]] (calls m/manga)))))))
