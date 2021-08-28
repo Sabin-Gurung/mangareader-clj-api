@@ -27,7 +27,7 @@
   (->> (en/select html [:table.d48 :a])
        (map #(hash-map
                :id (-> % :attrs :href (str/split #"/") last)
-               :source (-> % :attrs :href (->> (str BASE-URL "/")))
+               :source (-> % :attrs :href (->> (str BASE-URL)))
                :title (-> % :content first str/trim)))))
 
 (defn -parse-chapter-title [html]
