@@ -28,6 +28,4 @@
            :responses  {200 {:body use-case/ChapterDetailResponseDto}}
            :handler    (fn [{{{:keys [id chapter-id]} :path} :parameters}]
                          (resp/response (use-case/execute-chapter id chapter-id)))}}]
-
-   ]
-  )
+   ])
