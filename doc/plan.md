@@ -3,15 +3,20 @@
 ## Core features
 
 ### Service (web scraper www.mangareader.com)
-[ ] Create service to search mangas 
-[ ] Create endpoint to get manga info
-[ ] Create endpoint to get chapter images
+[x] Create service to search mangas  
+[x] Create endpoint to get manga info 
+[x] Create endpoint to get chapter images 
 
 ### Api (outgoing api)
-[ ] Setup reitit router (swagger/coercion/exception-handling)
-[ ] define endpoints
+[x] Setup reitit router (swagger/coercion)  
+[x] define endpoints  
+* [GET] /manga-api/manga/{mangaid}
+* [GET] /manga-api/manga/{mangaid}/chapters
+* [GET] /manga-api/manga/{mangaid}/chapters/{chapter}
+* [GET] /manga-api/search/term?page=
+* [GET] /manga-api/autocomplete/term
 
 ## Dev Ops
-[ ] Github pipeline to run tests
-[ ] Deploy to heroku
-[ ] utilize docker/docker-compose
+[ ] Github pipeline to run tests  
+[ ] Deploy to heroku  
+[ ] utilize docker/docker-compose  

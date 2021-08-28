@@ -9,6 +9,8 @@
                  [metosin/reitit "0.5.15"]
                  [metosin/jsonista "0.3.3"]
                  [prismatic/schema "1.1.12"]
+                 [mock-clj "0.2.1"]
+                 [ring/ring-mock "0.4.0"]
                  ]
   :resource-paths ["resources"]
   :main ^:skip-aot mangareader-clj-api.core

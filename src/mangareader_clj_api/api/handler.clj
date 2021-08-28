@@ -1,36 +1,40 @@
 (ns mangareader-clj-api.api.handler
-  (:require [org.httpkit.server :as server]
-            [reitit.ring :as ring]
-            [reitit.swagger :as swagger]
-            [schema.core :as s]
-            [reitit.swagger-ui :as swagger-ui]
-            [jsonista.core :as j]
-            [reitit.ring.coercion :as coercion]
-            [reitit.coercion.schema]
-            [reitit.ring.middleware.muuntaja :as muuntaja]
-            [reitit.ring.middleware.exception :as exception]
-            [reitit.ring.middleware.parameters :as parameters]
-            [muuntaja.core :as m])
-
-  )
+  (:require
+    [jsonista.core :as j]
+    [mangareader-clj-api.api.routes.manga-routes :as manga-routes]
+    [muuntaja.core :as m]
+    [org.httpkit.server :as server]
+    [reitit.coercion.schema]
+    [reitit.ring :as ring]
+    [reitit.ring.coercion :as coercion]
+    [reitit.ring.middleware.exception :as exception]
+    [reitit.ring.middleware.muuntaja :as muuntaja]
+    [reitit.ring.middleware.parameters :as parameters]
+    [reitit.swagger :as swagger]
+    [reitit.swagger-ui :as swagger-ui]
+    [ring.util.response :as ring-resp]
+    [schema.core :as s]
+    ))
 
 (defn swagger-routes []
   ["" {:no-doc true}
    ["/swagger.json" {:get (swagger/create-swagger-handler)}]
    ["/api-docs/*" {:get (swagger-ui/create-swagger-ui-handler {:url "/manga-api/swagger.json"})}]])
 
+(defn default-handlers []
+  (ring/create-default-handler
+    {:not-found          (constantly (ring-resp/not-found {:message "Endpoint not found"}))
+     :method-not-allowed (constantly {:status 405, :body {:message "Method not allowed"}})
+     :not-acceptable     (constantly {:status 406, :body {:message "Request not acceptable"}})}))
+
 (def app
   (ring/ring-handler
     (ring/router
       ["/manga-api"
        ["/health" {:get (fn [_] {:status 200 :body {:status "ok"}})}]
-       ["/plus"
-        {:get {:summary    "Add two numbers"
-               :parameters {:query {:x s/Int :y s/Int}}
-               :responses  {200 {:body {:total s/Int}}}
-               :handler    (fn [{{{:keys [x y]} :query} :parameters}] {:status 200 :body {:total (+ x y)}})}
-         }]
-       [(swagger-routes)]]
+       manga-routes/routes
+       (swagger-routes)
+       ]
       {:data {:coercion   reitit.coercion.schema/coercion
               :muuntaja   m/instance
               :middleware [parameters/parameters-middleware
@@ -43,13 +47,14 @@
               }})
     (ring/routes
       (ring/create-resource-handler {:path "/public"})
-      (ring/create-default-handler))
+      (default-handlers)
+      )
     ))
 
 (comment
-  (-> (app {:request-method :get :uri "/manga-api/health"})
+  (-> (app {:request-method :get :uri "/manga-api/manga/ehlo"})
       :body
-      (j/read-value j/keyword-keys-object-mapper)
+      ;(j/read-value j/keyword-keys-object-mapper)
       )
 
   (app {:request-method :get :uri "/manga-api/swagger.json"})
