@@ -38,6 +38,16 @@
                      {:keys [status headers body error] :as response} (app req)
                      res (parse-response body)]
                  (is (= 200 status))
-                 (is (= data/a-manga-chapters-response res))
+                 (is (= data/a-manga-chapters-res res))
                  (is (= [[data/a-manga-id]] (calls m/manga)))))))
+
+(deftest testing-manga-chapters-endpoint
+  (testing "GET /manga/:id/chapters/:chapter-id endpoint"
+    (with-mock [m/chapter data/a-manga-chapter-1]
+               (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358/chapters/chapter-1")
+                     {:keys [status headers body error] :as response} (app req)
+                     res (parse-response body)]
+                 (is (= 200 status))
+                 (is (= data/a-manga-chapter-1 res))
+                 (is (= [[data/a-manga-id "chapter-1"]] (calls m/chapter)))))))
 

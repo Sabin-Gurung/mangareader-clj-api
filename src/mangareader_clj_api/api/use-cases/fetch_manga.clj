@@ -17,6 +17,13 @@
                :title  s/Str
                :id     s/Str}]})
 
+(s/defschema ChapterDetailResponseDto
+  {:manga-id   s/Str
+   :chapter-id s/Str
+   :title      s/Str
+   :contents   [s/Str]
+   :source     s/Str})
+
 (defn execute [manga-id]
   (-> (m/manga manga-id)
       (assoc :id manga-id)
@@ -29,7 +36,11 @@
          :total    (count chapters)
          })))
 
+(defn execute-chapter [manga-id chapter-id]
+  (m/chapter manga-id chapter-id))
+
 
 (comment
   (m/manga "manga-rb968358")
+  (execute-chapter "manga-rb968358" "chapter-1")
   )

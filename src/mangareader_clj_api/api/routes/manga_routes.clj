@@ -22,5 +22,12 @@
            :handler    (fn [{{{id :id} :path} :parameters}]
                          (resp/response (use-case/execute-chapters id)))}}]
 
+   ["/manga/:id/chapters/:chapter-id"
+    {:get {:summary    "Get list of chapters of a manga"
+           :parameters {:path {:id s/Str :chapter-id s/Str}}
+           :responses  {200 {:body use-case/ChapterDetailResponseDto}}
+           :handler    (fn [{{{:keys [id chapter-id]} :path} :parameters}]
+                         (resp/response (use-case/execute-chapter id chapter-id)))}}]
+
    ]
   )
