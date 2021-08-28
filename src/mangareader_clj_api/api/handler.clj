@@ -2,6 +2,7 @@
   (:require
     [jsonista.core :as j]
     [mangareader-clj-api.api.routes.manga-routes :as manga-routes]
+    [mangareader-clj-api.api.routes.search-routes :as search-routes]
     [muuntaja.core :as m]
     [org.httpkit.server :as server]
     [reitit.coercion.schema]
@@ -33,6 +34,7 @@
       ["/manga-api"
        ["/health" {:get (fn [_] {:status 200 :body {:status "ok"}})}]
        manga-routes/routes
+       search-routes/routes
        (swagger-routes)
        ]
       {:data {:coercion   reitit.coercion.schema/coercion

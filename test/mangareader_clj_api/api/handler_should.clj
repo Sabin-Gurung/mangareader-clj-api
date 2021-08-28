@@ -48,6 +48,6 @@
                      {:keys [status headers body error] :as response} (app req)
                      res (parse-response body)]
                  (is (= 200 status))
-                 (is (= data/a-manga-chapter-1 res))
+                 (is (= data/a-manga-chapter-1-response res))
                  (is (= [[data/a-manga-id "chapter-1"]] (calls m/chapter)))))))
 

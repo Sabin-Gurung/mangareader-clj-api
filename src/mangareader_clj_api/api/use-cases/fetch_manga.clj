@@ -19,11 +19,11 @@
                :id     s/Str}]})
 
 (s/defschema ChapterDetailResponseDto
-  {:manga-id   s/Str
-   :chapter-id s/Str
-   :title      s/Str
-   :contents   [s/Str]
-   :source     s/Str})
+  {:mangaId   s/Str
+   :chapterId s/Str
+   :title     s/Str
+   :contents  [s/Str]
+   :source    s/Str})
 
 (defn execute [manga-id]
   (-> (m/manga manga-id)
@@ -38,7 +38,11 @@
          })))
 
 (defn execute-chapter [manga-id chapter-id]
-  (m/chapter manga-id chapter-id))
+  (let [manga (m/chapter manga-id chapter-id)]
+    (-> manga
+        (select-keys [:title :contents :source])
+        (assoc :mangaId (:manga-id manga))
+        (assoc :chapterId (:chapter-id manga)))))
 
 
 (comment

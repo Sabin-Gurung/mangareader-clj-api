@@ -34,6 +34,11 @@
                 "http://cm.blazefast.co/42/4d/424dde6a0b91e67599a5411fb25088b9.jpg"]
    :source     "https://mangareader.tv/chapter/manga-rb968358/chapter-1"})
 
+(def a-manga-chapter-1-response
+  (-> (select-keys a-manga-chapter-1 [:title :contents :source])
+      (assoc :mangaId "manga-rb968358")
+      (assoc :chapterId "chapter-1")))
+
 (def a-manga-response
   (-> a-manga
       (assoc :id a-manga-id)
