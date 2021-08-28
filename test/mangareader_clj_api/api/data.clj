@@ -43,3 +43,20 @@
   (-> a-manga
       (assoc :id a-manga-id)
       (update :chapters count)))
+
+(def a-search
+  {:mangas      [{:id        "manga-qq951425",
+                  :chapters  688,
+                  :title     "Bleach",
+                  :thumbnail "https://mangareader.tv/mangaimage/manga-qq951425.jpg"}
+                 {:id        "manga-lx988480",
+                  :chapters  47,
+                  :title     "Bleach - Digital Colored Comics",
+                  :thumbnail "https://mangareader.tv/mangaimage/manga-lx988480.jpg"}],
+   :source      "https://mangareader.tv/search/?w=bleach&page=1",
+   :offset      1,
+   :total-pages 1})
+
+(def a-search-res
+  (-> (dissoc a-search :total-pages)
+      (assoc :totalPages 1)))

@@ -61,7 +61,7 @@
     (->> (en/select html [:div.d54 :tr])
          (map #(-> {}
                    (assoc :id (parse-id %))
-                   (assoc :total-chapters (parse-chapter-count %))
+                   (assoc :chapters (parse-chapter-count %))
                    (assoc :title (parse-title %))
                    (assoc :thumbnail (parse-thumbnail %)))))))
 

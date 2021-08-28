@@ -58,6 +58,7 @@
       :body
       ;(j/read-value j/keyword-keys-object-mapper)
       )
+  (app {:request-method :get :uri "/manga-api/search/bleach"})
 
   (app {:request-method :get :uri "/manga-api/swagger.json"})
   (app {:request-method :get :uri "/manga-api/api-docs/index.html"})

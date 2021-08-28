@@ -51,3 +51,13 @@
                  (is (= data/a-manga-chapter-1-response res))
                  (is (= [[data/a-manga-id "chapter-1"]] (calls m/chapter)))))))
 
+(deftest searching-term
+  (testing "GET /search/:term"
+    (with-mock [m/search data/a-search]
+               (let [req (ring-mock/request :get "/manga-api/search/bleach")
+                     {:keys [status headers body error] :as response} (app req)
+                     res (parse-response body)]
+                 (is (= 200 status))
+                 (is (= data/a-search-res res))
+                 (is (= [["bleach" nil]] (calls m/search)))))))
+
