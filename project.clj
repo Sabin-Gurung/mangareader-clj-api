@@ -14,7 +14,11 @@
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}
              :dev     {:dependencies [[mock-clj "0.2.1"]
-                                      [ring/ring-mock "0.4.0"]]}
+                                      [ring/ring-mock "0.4.0"]]
+                       :plugins [[metosin/bat-test "0.4.4"]]
+                       }
              :prod    {}
              }
+  :bat-test {:test-matcher #".*(should|test|it|IT)"}
+  :test-selectors {:unit (fn [m] (clojure.string/ends-with? (str (:ns m)) "should"))}
   )
