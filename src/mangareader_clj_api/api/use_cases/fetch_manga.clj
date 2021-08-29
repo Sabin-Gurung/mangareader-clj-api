@@ -25,25 +25,32 @@
    :contents  [s/Str]
    :source    s/Str})
 
+(defn handle-error [message]
+  (throw (ex-info message {:type    :api/not-found
+                           :message message})))
+
 (defn execute [manga-id]
-  (-> (m/manga manga-id)
-      (assoc :id manga-id)
-      (update :chapters count)))
+  (if-let [manga (m/manga manga-id)]
+    (-> manga
+        (assoc :id manga-id)
+        (update :chapters count))
+    (handle-error (format "cannot find manga %s" manga-id))))
 
 (defn execute-chapters [manga-id]
-  (let [{:keys [chapters]} (m/manga manga-id)]
+  (if-let [{:keys [chapters]} (m/manga manga-id)]
     (-> {:id       manga-id
          :chapters chapters
-         :total    (count chapters)
-         })))
+         :total    (count chapters)})
+    (handle-error (format "cannot find manga %s" manga-id))))
+
 
 (defn execute-chapter [manga-id chapter-id]
-  (let [manga (m/chapter manga-id chapter-id)]
+  (if-let [manga (m/chapter manga-id chapter-id)]
     (-> manga
         (select-keys [:title :contents :source])
         (assoc :mangaId (:manga-id manga))
-        (assoc :chapterId (:chapter-id manga)))))
-
+        (assoc :chapterId (:chapter-id manga)))
+    (handle-error (format "cannot find manga %s chapter %s" manga-id chapter-id))))
 
 (comment
   (m/manga "manga-rb968358")

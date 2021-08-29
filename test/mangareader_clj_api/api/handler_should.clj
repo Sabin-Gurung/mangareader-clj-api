@@ -29,7 +29,14 @@
                      res (parse-response body)]
                  (is (= 200 status))
                  (is (= data/a-manga-chapters-res res))
-                 (is (= [[data/a-manga-id]] (calls m/manga)))))))
+                 (is (= [[data/a-manga-id]] (calls m/manga))))))
+  (testing "GET /manga/:id/chapters endpoint"
+    (with-mock [m/manga nil]
+               (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358/chapters")
+                     {:keys [status headers body error] :as response} (app req)
+                     res (parse-response body)]
+                 (is (= 404 status))
+                 (is (= "api/not-found" (:type res)))))))
 
 (deftest manga-chapters-endpoint
   (testing "GET /manga/:id/chapters/:chapter-id endpoint"
@@ -39,7 +46,14 @@
                      res (parse-response body)]
                  (is (= 200 status))
                  (is (= data/a-manga-chapter-1-response res))
-                 (is (= [[data/a-manga-id "chapter-1"]] (calls m/chapter)))))))
+                 (is (= [[data/a-manga-id "chapter-1"]] (calls m/chapter))))))
+  (testing "GET /manga/:id/chapters/:chapter-id not found"
+    (with-mock [m/chapter nil]
+               (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358/chapters/chapter-1")
+                     {:keys [status headers body error] :as response} (app req)
+                     res (parse-response body)]
+                 (is (= 404 status))
+                 (is (= "api/not-found" (:type res)))))))
 
 (deftest searching-term
   (testing "GET /search/:term"
@@ -59,4 +73,12 @@
                      res (parse-response body)]
                  (is (= 200 status))
                  (is (= data/a-manga-response res))
-                 (is (= [[data/a-manga-id]] (calls m/manga)))))))
+                 (is (= [[data/a-manga-id]] (calls m/manga))))))
+  (testing "GET /manga/{} when resource does not exist"
+    (with-mock [m/manga nil]
+               (let [req (ring-mock/request :get "/manga-api/manga/manga-rb968358")
+                     {:keys [status headers body error] :as response} (app req)
+                     res (parse-response body)]
+                 (is (= 404 status))
+                 (is (= "api/not-found" (:type res))))))
+  )

@@ -175,7 +175,7 @@
       ;first
       )
   ;(chapter "manga-aa951409" "chapter-1")
-  (search "bleach" nil)
+  (search "asdfakj34" nil)
   (manga "manga sdaf-rb968358")
   (manga "manga-rb968358")
   (chapter "manga-rb968358" "asdfchapter-1")

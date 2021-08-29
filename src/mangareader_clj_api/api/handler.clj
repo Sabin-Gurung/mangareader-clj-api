@@ -8,7 +8,8 @@
     [reitit.coercion.schema]
     [reitit.ring :as ring]
     [reitit.ring.coercion :as coercion]
-    [reitit.ring.middleware.exception :as exception]
+    ;[reitit.ring.middleware.exception :as exception]
+    [mangareader-clj-api.api.exceptions :as exc]
     [reitit.ring.middleware.muuntaja :as muuntaja]
     [reitit.ring.middleware.parameters :as parameters]
     [reitit.swagger :as swagger]
@@ -42,7 +43,7 @@
               :middleware [parameters/parameters-middleware
                            muuntaja/format-negotiate-middleware
                            muuntaja/format-response-middleware
-                           exception/exception-middleware
+                           exc/middleware
                            muuntaja/format-request-middleware
                            coercion/coerce-response-middleware
                            coercion/coerce-request-middleware]
