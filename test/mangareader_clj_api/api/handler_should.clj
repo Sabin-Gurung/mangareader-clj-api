@@ -51,7 +51,6 @@
                  (is (= data/a-search-res res))
                  (is (= [["bleach" nil]] (calls m/search)))))))
 
-
 (deftest manga-endpoint
   (testing "GET /manga/{} endpoint"
     (with-mock [m/manga data/a-manga]
