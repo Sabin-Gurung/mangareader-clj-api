@@ -10,10 +10,11 @@
                  [org.clojure/clojure "1.10.1"]
                  [prismatic/schema "1.1.12"]
                  [ring-cors "0.1.13"]
+                 [com.taoensso/timbre "5.1.2"]
                  ]
   :resource-paths ["resources"]
   :main mangareader-clj-api.core
-  :aot [mangareader-clj-api.core mangareader-clj-api.api.handler]
+  ;:aot [mangareader-clj-api.core mangareader-clj-api.api.handler]
   :target-path "target/%s"
   :profiles {:dev  {:dependencies [[mock-clj "0.2.1"]
                                    [ring/ring-mock "0.4.0"]]
