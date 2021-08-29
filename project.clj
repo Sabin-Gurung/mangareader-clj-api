@@ -13,7 +13,7 @@
                  ]
   :resource-paths ["resources"]
   :main mangareader-clj-api.core
-  :aot [mangareader-clj-api.core]
+  :aot [mangareader-clj-api.core mangareader-clj-api.api.handler]
   :target-path "target/%s"
   :profiles {:dev  {:dependencies [[mock-clj "0.2.1"]
                                    [ring/ring-mock "0.4.0"]]

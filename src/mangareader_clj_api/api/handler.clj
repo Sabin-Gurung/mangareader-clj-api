@@ -15,8 +15,8 @@
     [reitit.swagger :as swagger]
     [reitit.swagger-ui :as swagger-ui]
     [ring.util.response :as ring-resp]
-    [schema.core :as s]
-    ))
+    )
+  (:gen-class))
 
 (defn swagger-routes []
   ["" {:no-doc true}
@@ -57,6 +57,10 @@
       (default-handlers)
       )
     ))
+
+(defn -main [& a]
+  (println "from handler")
+  )
 
 (comment
   (-> (app {:request-method :get :uri "/manga-api/manga/ehlo"})
