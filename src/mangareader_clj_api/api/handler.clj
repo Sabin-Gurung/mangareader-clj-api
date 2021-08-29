@@ -8,7 +8,7 @@
     [reitit.coercion.schema]
     [reitit.ring :as ring]
     [reitit.ring.coercion :as coercion]
-    ;[reitit.ring.middleware.exception :as exception]
+    [ring.middleware.cors :as cors]
     [mangareader-clj-api.api.exceptions :as exc]
     [reitit.ring.middleware.muuntaja :as muuntaja]
     [reitit.ring.middleware.parameters :as parameters]
@@ -46,7 +46,11 @@
                            exc/middleware
                            muuntaja/format-request-middleware
                            coercion/coerce-response-middleware
-                           coercion/coerce-request-middleware]
+                           coercion/coerce-request-middleware
+                           [cors/wrap-cors
+                            :access-control-allow-origin [#".*"]
+                            :access-control-allow-methods [:get :put :post :delete :options]]
+                           ]
               }})
     (ring/routes
       (ring/create-resource-handler {:path "/public"})

@@ -8,16 +8,17 @@
                  [metosin/jsonista "0.3.3"]
                  [metosin/reitit "0.5.15"]
                  [org.clojure/clojure "1.10.1"]
-                 [prismatic/schema "1.1.12"]]
+                 [prismatic/schema "1.1.12"]
+                 [ring-cors "0.1.13"]
+                 ]
   :resource-paths ["resources"]
-  :main ^:skip-aot mangareader-clj-api.core
+  :main mangareader-clj-api.core
+  :aot [mangareader-clj-api.core]
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}
-             :dev     {:dependencies [[mock-clj "0.2.1"]
-                                      [ring/ring-mock "0.4.0"]]
-                       :plugins [[metosin/bat-test "0.4.4"]]
-                       }
-             :prod    {}
+  :profiles {:dev  {:dependencies [[mock-clj "0.2.1"]
+                                   [ring/ring-mock "0.4.0"]]
+                    :plugins      [[metosin/bat-test "0.4.4"]]}
+             :prod {}
              }
   :bat-test {:test-matcher #".*(should|test|it|IT)"}
   :test-selectors {:unit (fn [m] (clojure.string/ends-with? (str (:ns m)) "should"))}

@@ -1,7 +1,13 @@
 (ns mangareader-clj-api.core
+  (:require
+    [mangareader-clj-api.api.handler :refer [app]]
+    [org.httpkit.server :as server]
+    )
   (:gen-class))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (let [[port & _] args
+        p (or port 8080)]
+    (println "Running server on port 8080")
+    (server/run-server app {:port p})))
