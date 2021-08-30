@@ -17,8 +17,8 @@
 * [GET] /manga-api/autocomplete/term [special]
 
 ### Exception handling
-[ ] for service
-[ ] for our endpiont
+[x] for service  
+[x] for our endpiont  
 
 ## Dev Ops
 [ ] Github pipeline to run tests  
