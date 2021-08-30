@@ -8,6 +8,7 @@
                  [http-kit "2.5.3"]
                  [metosin/jsonista "0.3.3"]
                  [metosin/reitit "0.5.15"]
+                 [yogthos/config "1.1.8"]
                  [org.clojure/clojure "1.10.1"]
                  [prismatic/schema "1.1.12"]
                  [ring-cors "0.1.13"]

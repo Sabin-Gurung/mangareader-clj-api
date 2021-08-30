@@ -3,13 +3,14 @@
     [mangareader-clj-api.api.handler :refer [app]]
     [org.httpkit.server :as server]
     [taoensso.timbre :as log]
+    [config.core :refer [env]]
     )
   (:gen-class))
 
 (defn -main
   [& args]
   (let [[port & _] args
-        p (or port "8080")]
+        p (or (:port env) port "8080")]
     (log/info (str "Running server on port :" p))
     (server/run-server app {:port (Integer/parseInt p)})))
 
