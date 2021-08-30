@@ -13,7 +13,7 @@
         p (or (:port env) port 8080)
         p (cond-> p (string? p) (Integer/parseInt))]
     (log/info (str "Running server on port :" p))
-    (server/run-server app {:port (Integer/parseInt p)})))
+    (server/run-server app {:port p})))
 
 (comment
   (-main 3000)
