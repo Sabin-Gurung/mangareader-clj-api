@@ -36,7 +36,7 @@
                      {:keys [status headers body error] :as response} (app req)
                      res (parse-response body)]
                  (is (= 404 status))
-                 (is (= "api/not-found" (:type res)))))))
+                 (is (= "problem:invalid-chapter-or-manga" (:type res)))))))
 
 (deftest manga-chapters-endpoint
   (testing "GET /manga/:id/chapters/:chapter-id endpoint"
@@ -53,7 +53,7 @@
                      {:keys [status headers body error] :as response} (app req)
                      res (parse-response body)]
                  (is (= 404 status))
-                 (is (= "api/not-found" (:type res)))))))
+                 (is (= "problem:invalid-chapter-or-manga" (:type res)))))))
 
 (deftest searching-term
   (testing "GET /search/:term"
@@ -80,5 +80,5 @@
                      {:keys [status headers body error] :as response} (app req)
                      res (parse-response body)]
                  (is (= 404 status))
-                 (is (= "api/not-found" (:type res))))))
+                 (is (= "problem:invalid-chapter-or-manga" (:type res))))))
   )

@@ -16,9 +16,10 @@
   :main mangareader-clj-api.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot [mangareader-clj-api.core mangareader-clj-api.api.handler]}
-             :dev     {:dependencies [[mock-clj "0.2.1"]
-                                      [ring/ring-mock "0.4.0"]]
-                       :plugins      [[metosin/bat-test "0.4.4"]]}
+             :dev     {:dependencies         [[mock-clj "0.2.1"]
+                                              [ring/ring-mock "0.4.0"]]
+                       :plugins              [[metosin/bat-test "0.4.4"]]
+                       :managed-dependencies [[org.clojure/tools.reader "1.2.2"]]}
              :prod    {}
              }
   :bat-test {:test-matcher #".*(should|test|it|IT)"}
