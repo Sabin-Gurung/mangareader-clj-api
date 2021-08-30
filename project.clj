@@ -15,6 +15,7 @@
                  ]
   :resource-paths ["resources"]
   :main mangareader-clj-api.core
+  :uberjar-name "mangareader-clj-api.jar"
   :target-path "target/%s"
   :profiles {:uberjar {:aot [mangareader-clj-api.core mangareader-clj-api.api.handler]}
              :dev     {:dependencies         [[mock-clj "0.2.1"]
