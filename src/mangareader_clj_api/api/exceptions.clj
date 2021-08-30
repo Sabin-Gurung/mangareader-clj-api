@@ -29,11 +29,7 @@
   (r-ex/create-exception-middleware
     (merge
       r-ex/default-handlers
-      {:api/not-found not-found-handler
-       ::r-ex/wrap    (fn [handler e request]
-                        (log-request-exception request e)
-                        (handler e request))
-       }
+      {:api/not-found not-found-handler}
       )))
 
 (comment
