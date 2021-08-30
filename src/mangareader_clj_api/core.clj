@@ -10,7 +10,8 @@
 (defn -main
   [& args]
   (let [[port & _] args
-        p (or (:port env) port "8080")]
+        p (or (:port env) port 8080)
+        p (cond-> p (string? p) (Integer/parseInt))]
     (log/info (str "Running server on port :" p))
     (server/run-server app {:port (Integer/parseInt p)})))
 
