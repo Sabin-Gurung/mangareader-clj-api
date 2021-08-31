@@ -13,6 +13,7 @@
                  [prismatic/schema "1.1.12"]
                  [ring-cors "0.1.13"]
                  [com.taoensso/timbre "5.1.2"]
+                 [ring-logger "1.0.1"]
                  ]
   :resource-paths ["resources"]
   :main mangareader-clj-api.core

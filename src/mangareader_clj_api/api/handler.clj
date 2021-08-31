@@ -15,6 +15,8 @@
     [reitit.swagger :as swagger]
     [reitit.swagger-ui :as swagger-ui]
     [ring.util.response :as ring-resp]
+    [ring.logger :as rlog]
+    [taoensso.timbre :as log]
     )
   (:gen-class))
 
@@ -50,6 +52,8 @@
                            [cors/wrap-cors
                             :access-control-allow-origin [#".*"]
                             :access-control-allow-methods [:get :put :post :delete :options]]
+                           [rlog/wrap-log-response {:log-fn (fn [{:keys [level throwable message]}]
+                                                              (log/log level message throwable))}]
                            ]
               }})
     (ring/routes
