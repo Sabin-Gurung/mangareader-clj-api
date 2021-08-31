@@ -15,6 +15,10 @@ To build the project you will need
 
 ## Running the application
 
+Directly running the prebuild jar included in the project
+
+    $ java -jar ./releases/mangareader-clj-api.jar {?port}
+
 Directly running with the run command
 
     $ lein run {?port}
