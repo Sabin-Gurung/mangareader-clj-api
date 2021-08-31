@@ -36,8 +36,8 @@
     (ring/router
       ["/manga-api"
        ["/health" {:get (fn [_] {:status 200 :body {:status "ok"}})}]
-       manga-routes/routes
        search-routes/routes
+       manga-routes/routes
        (swagger-routes)
        ]
       {:data {:coercion   reitit.coercion.schema/coercion
