@@ -7,6 +7,13 @@ scraped from https://mangareader.tv/ website.
 
 This is a toy project that I worked on learn new clojure libraries. 
 
+## Contents
+* [Requirements] (# requirements)
+* [Running the application] (# running-the-application)
+* [Running tests] (# running-tests)
+* [Usage] (# usage)
+* [License] (# license)
+
 ## Requirements
 
 To build the project you will need
