@@ -7,43 +7,17 @@ scraped from https://mangareader.tv/ website.
 
 This is a toy project that I worked on learn new clojure libraries. 
 
+The api is hosted in heroku. Check it out here:  
+https://mangareader-clj.herokuapp.com/manga-api/api-docs/index.html
+
+![alt text](doc/swagger.png)
+
 ## Contents
+- [Usage](#usage)
 - [Requirements](#requirements)
 - [Running the application](#running-the-application)
 - [Running tests](#running-tests)
-- [Usage](#usage)
 - [License](#license)
-
-## Requirements
-
-To build the project you will need
-* leiningen
-* java 1.8jdk
-
-## Running the application
-
-Directly running the prebuild jar included in the project
-
-    $ java -jar ./releases/mangareader-clj-api.jar {?port}
-
-Directly running with the run command
-
-    $ lein run {?port}
-
-Building uberjar and running the jar
-
-    $ lein uberjar
-    $ java -jar target/uberjar/mangareader-clj-api.jar {?port}
-
-## Running tests
-
-Run tests 
-
-    $ lein bat-test once
-    
-Run tests and watch for changes
-
-    $ lein bat-test auto
 
 ## Usage
 
@@ -51,8 +25,9 @@ Run the application with the above methods.
 You can access the swagger page on /manga-api/api-docs/index.html
 
 You can search a term by  
-__/manga-api/search/{term}{?page=0}__  
-*/manga-api/search/bleach*
+
+endpoint: /manga-api/search/{term}{?page=0}    
+example : https://mangareader-clj.herokuapp.com/manga-api/search/bleach
 ```json
 {
   "source": "https://mangareader.tv/search/?w=bleach&page=1",
@@ -75,8 +50,10 @@ __/manga-api/search/{term}{?page=0}__
 }
 ```
 With the manga id you can search the information related to the manga  
-__/manga-api/manga/{manga-id}__  
-*/manga-api/manga/manga-qq951425* 
+
+endpoint: /manga-api/manga/{manga-id}    
+example : https://mangareader-clj.herokuapp.com/manga-api/manga/manga-qq951425
+    
 ```json
 {
   "id": "manga-qq951425",
@@ -99,8 +76,9 @@ __/manga-api/manga/{manga-id}__
 }
 ```
 Or fetch the list of chapters of the manga
-__/manga-api/manga/{manga-id}/chapters__  
-*/manga-api/manga/manga-qq951425/chapters*
+
+endpoint: /manga-api/manga/{manga-id}/chapters   
+example : https://mangareader-clj.herokuapp.com/manga-api/manga/manga-qq951425/chapters
 ```json
 {
   "id": "manga-qq951425",
@@ -131,8 +109,9 @@ __/manga-api/manga/{manga-id}/chapters__
 }
 ```
 Or you can fetch the pages of each chapter.
-__/manga-api/manga/{manga-id}/chapters/{chapter-id}__   
-*/manga-api/manga/manga-qq951425/chapters/chapter-1*
+
+endpoint: /manga-api/manga/{manga-id}/chapters/{chapter-id}  
+example : https://mangareader-clj.herokuapp.com/manga-api/manga/manga-qq951425/chapters/chapter-1
 ```json
 {
   "mangaId": "manga-qq951425",
@@ -200,6 +179,38 @@ __/manga-api/manga/{manga-id}/chapters/{chapter-id}__
   "source": "https://mangareader.tv/chapter/manga-qq951425/chapter-1"
 }
 ```
+
+## Requirements
+
+To build the project you will need
+* leiningen
+* java 1.8jdk
+
+## Running the application
+
+Directly running the prebuild jar included in the project
+
+    $ java -jar ./releases/mangareader-clj-api.jar {?port}
+
+Directly running with the run command
+
+    $ lein run {?port}
+
+Building uberjar and running the jar
+
+    $ lein uberjar
+    $ java -jar target/uberjar/mangareader-clj-api.jar {?port}
+
+## Running tests
+
+Run tests 
+
+    $ lein bat-test once
+    
+Run tests and watch for changes
+
+    $ lein bat-test auto
+
 
 ## License
 
