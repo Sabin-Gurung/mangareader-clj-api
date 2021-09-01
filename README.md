@@ -8,11 +8,11 @@ scraped from https://mangareader.tv/ website.
 This is a toy project that I worked on learn new clojure libraries. 
 
 ## Contents
-* [Requirements] (# requirements)
-* [Running the application] (# running-the-application)
-* [Running tests] (# running-tests)
-* [Usage] (# usage)
-* [License] (# license)
+* [requirements] (#requirements)
+* [running the application] (#running-the-application)
+* [running tests] (#running-tests)
+* [usage] (#usage)
+* [license] (#license)
 
 ## Requirements
 
