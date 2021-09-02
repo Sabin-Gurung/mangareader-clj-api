@@ -1,4 +1,4 @@
-# mangareader-clj-api
+# Mangareader-clj-api
 
 Do you love reading mangas ? 
 Here is a Manga API that provides endpoints to search and 
