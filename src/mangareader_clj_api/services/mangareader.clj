@@ -8,40 +8,40 @@
 
 (def BASE-URL "https://mangareader.tv")
 
-(defn -GET [endpoint]
+(defn- -GET [endpoint]
   (let [res @(http/get endpoint {:client @default-client})]
     (when (= 200 (:status res))
       (:body res))))
 
-(defn -en-GET [endpoint]
+(defn- -en-GET [endpoint]
   (-> (-GET endpoint)
       en/html-snippet))
 
-(defn -parse-manga-genres [html]
+(defn- -parse-manga-genres [html]
   (->> (en/select html [:table.d41 :tbody :td :a.d42])
        (mapcat :content)
        (map str/trim)))
 
-(defn -parse-manga-title [html]
+(defn- -parse-manga-title [html]
   (->> (en/select html [:table.d41 :tbody :td :span.name])
        (mapcat :content)
        (map str/trim)
        first))
 
-(defn -parse-manga-chapters [html]
+(defn- -parse-manga-chapters [html]
   (->> (en/select html [:table.d48 :a])
        (map #(hash-map
                :id (-> % :attrs :href (str/split #"/") last)
                :source (-> % :attrs :href (->> (str BASE-URL)))
                :title (-> % :content first str/trim)))))
 
-(defn -parse-chapter-title [html]
+(defn- -parse-chapter-title [html]
   (->> (en/select html [:h1.d55])
        (mapcat :content)
        (map #(-> (str/split % #"\n") last str/trim))
        first))
 
-(defn -parse-search-mangas [html]
+(defn- -parse-search-mangas [html]
   (let [parse-thumbnail (fn [h] (->> (en/select h [:div.d56])
                                      (map #(-> % :attrs :data-src ((partial str BASE-URL))))
                                      first))
@@ -66,12 +66,12 @@
                    (assoc :title (parse-title %))
                    (assoc :thumbnail (parse-thumbnail %)))))))
 
-(defn -parse-search-total-pages [raw-html]
+(defn- -parse-search-total-pages [raw-html]
   (->> (re-find #"Last \((.*)\)" raw-html)
        last
        Integer/parseInt))
 
-(defn -parse-chapter-contents [html]
+(defn- -parse-chapter-contents [html]
   (->> (en/select html [:div#ib :img])
        (map (comp :data-src :attrs))))
 
